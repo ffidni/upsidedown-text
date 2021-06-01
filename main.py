@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import (QApplication, QLabel, QSpacerItem, QSizePolicy, QPu
 from PyQt5.QtCore import QEvent, Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QCursor
 from sys import argv, exit
-from os import environ
 
 #Setting up ui size on high resolution
 if hasattr(Qt, 'AA_EnableHighDpiScaling'):
