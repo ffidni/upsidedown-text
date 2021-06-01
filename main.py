@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import (QApplication, QLabel, QSpacerItem, QSizePolicy, QPushButton,
-                            QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QTextEdit)
+                            QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QTextEdit, QAction)
 from PyQt5.QtCore import QEvent, Qt, QSize, QTimer
 from PyQt5.QtGui import QIcon, QFont, QCursor
 from sys import argv, exit
@@ -48,6 +48,7 @@ class UpsideDown(QWidget):
 
 
     def init_ui(self):
+        self.fullscreen = QAction("&Fullscreen", self)
         self.title = QLabel("Make it Upside Down !", self)
         self.vspacer = QSpacerItem(0, 80, QSizePolicy.Minimum, QSizePolicy.Fixed)
         self.vspacer_2 = QSpacerItem(0, 20, QSizePolicy.Minimum, QSizePolicy.Fixed)
@@ -55,10 +56,16 @@ class UpsideDown(QWidget):
         self.create_output()
 
         self.setObjectName("Main")
-        self.setWindowTitle("Word Upside-down Generator")
+        self.setWindowIcon(QIcon("Assets/icon.png"))
+        self.setWindowTitle("Upside down Text Generator")
         self.setMinimumSize(493, 494)
         self.resize(self.w, self.h)
         self.setStyleSheet(self.stylesheet)
+
+        self.fullscreen.setShortcut("F11")
+        self.fullscreen.triggered.connect(self.toggle_fullscreen)
+        self.fullscreen.setStatusTip("Change to fullscreen mode")
+        self.addAction(self.fullscreen)
 
         self.title.setObjectName("Title")
         self.upsidedown_output.setObjectName("Upside-O")
@@ -74,6 +81,12 @@ class UpsideDown(QWidget):
         self.copy_btn.setToolTip("Copy to clipboard")
         self.copy_btn.clicked.connect(self.copy_text) 
         self.copy_btn.installEventFilter(self)
+
+    def toggle_fullscreen(self):
+        if self.isFullScreen():
+            self.showNormal()
+        else:
+            self.showFullScreen()
 
     def create_input(self):
         self.input_widget = QWidget()
@@ -143,6 +156,7 @@ class UpsideDown(QWidget):
         self.copy_btn.setIcon(QIcon("Assets/copied.png"))
         self.copied = True
         QTimer.singleShot(1100, on_click)
+
 
     def eventFilter(self, widget, event):
         #Event filter on hovering on copy button

@@ -1,2 +1,2 @@
 # upsidedown-text
-App for making letter or symbol upside down.
+An App that can be used to make a letter/symbol upside down
